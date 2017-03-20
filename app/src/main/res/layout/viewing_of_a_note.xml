@@ -5,12 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <EditText
+    <android.support.v7.widget.AppCompatEditText
         android:id="@+id/note_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:ems="10"
-        android:inputType="textMultiLine" />
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:background="@android:color/transparent"/>
 </LinearLayout>

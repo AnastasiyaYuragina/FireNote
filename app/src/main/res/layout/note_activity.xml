@@ -3,26 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:theme="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar_note"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            android:title="@string/title_bar">
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_arrow_back"
-                android:background="@color/colorPrimary"/>
-            </android.support.v7.widget.Toolbar>
+        <include layout="@layout/item_back" />
 
     </android.support.design.widget.AppBarLayout>
 
