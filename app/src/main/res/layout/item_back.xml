@@ -21,7 +21,7 @@
         android:id="@+id/screenTitle"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:text="@string/app_name"
+        android:text="@string/title_bar"
         android:background="?attr/colorPrimary"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse"
         android:gravity="center_vertical"/>
