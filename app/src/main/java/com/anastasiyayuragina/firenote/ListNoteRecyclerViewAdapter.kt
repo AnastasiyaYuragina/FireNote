@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.anastasiyayuragina.firenote.NoteListFragment.OnListFragmentInteractionListener
+import java.util.*
 
-class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder>() {
+class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractionListener?)
+    : RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder>() {
     private var values: ArrayList<Note> = ArrayList()
 
     fun addListNote(list: List<Note>) {
@@ -22,7 +24,7 @@ class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractio
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.noteText.text = values[position].getNoteText()
-        holder.date.text = values[position].getNoteDate().toString()
+        holder.date.text = values[position].getNoteDate()
 
         holder.view.setOnClickListener {
             listener?.onListFragmentInteraction(values[position])

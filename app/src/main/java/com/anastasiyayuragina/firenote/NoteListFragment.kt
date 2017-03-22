@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 
 class NoteListFragment : Fragment() {
-    // TODO: Customize parameters
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
     private var listNote : ArrayList<Note> = ArrayList()
@@ -39,6 +38,7 @@ class NoteListFragment : Fragment() {
                 recyclerView.layoutManager = GridLayoutManager(context, columnCount)
             }
             adapter = ListNoteRecyclerViewAdapter(listener)
+            recyclerView.adapter = adapter
         }
         return view
     }

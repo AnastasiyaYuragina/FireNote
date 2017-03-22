@@ -1,14 +1,16 @@
 package com.anastasiyayuragina.firenote
 
+import java.text.DateFormat
 import java.util.*
 
 class Note {
     private var noteText: String = ""
-    private var noteDate: Date = Date(System.currentTimeMillis())
+    private var noteDate: String = ""
+    val df : DateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM)
 
-    constructor(noteText: String, noteDate: Long) {
+    constructor(noteText: String, date: Long) {
         this.noteText = noteText
-        this.noteDate = Date(noteDate)
+        this.noteDate = df.format(Date(date))
     }
 
     fun setNoteText(text: String) {
@@ -20,10 +22,10 @@ class Note {
     }
 
     fun setNoteDate(date: Long) {
-        noteDate = Date(date)
+        noteDate = df.format(Date(date))
     }
 
-    fun getNoteDate() : Date {
+    fun getNoteDate() : String {
         return noteDate
     }
 
