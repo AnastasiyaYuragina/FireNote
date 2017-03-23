@@ -37,8 +37,7 @@ class NoteListFragment : Fragment() {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, columnCount)
             }
-            adapter = ListNoteRecyclerViewAdapter(listener)
-            recyclerView.adapter = adapter
+            adapter = ListNoteRecyclerViewAdapter(listener, recyclerView)
         }
         return view
     }

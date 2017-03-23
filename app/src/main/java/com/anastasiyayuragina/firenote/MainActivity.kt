@@ -1,6 +1,5 @@
 package com.anastasiyayuragina.firenote
 
-import android.app.Fragment
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -10,8 +9,10 @@ import android.view.Menu
 import android.view.MenuItem
 
 class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInteractionListener {
-    override fun onListFragmentInteraction(item: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    enum class FragmentType {
+        NOTE_LIST,
+        ADD_CHANGE_NOTE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +21,9 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        val fragment = NoteListFragment.newInstance(1)
-        fragmentManager.beginTransaction().replace(R.id.container, fragment,
-                NoteListFragment.toString()).addToBackStack(null).commit()
+        if (savedInstanceState == null) {
+            replaceFragment(FragmentType.NOTE_LIST)
+        }
 
         val fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
@@ -48,5 +49,29 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    fun replaceFragment(type: FragmentType) {
+        var fragment = fragmentManager.findFragmentByTag(type.name)
+
+        if (fragment == null)
+        {
+            fragment = NoteListFragment.newInstance(1)
+        }
+
+        if (type == FragmentType.NOTE_LIST) {
+            fragmentManager.beginTransaction().replace(R.id.container, fragment,
+                    NoteListFragment.toString()).commit()
+        }
+    }
+
+    fun readNote(noteText: String) {
+        val fragment = AddChangeNoteFragment.newInstance(noteText)
+        fragmentManager.beginTransaction().replace(R.id.container, fragment,
+                NoteListFragment.toString()).addToBackStack(null).commit()
+    }
+
+    override fun onListFragmentInteraction(item: Note) {
+        readNote(item.getNoteText())
     }
 }

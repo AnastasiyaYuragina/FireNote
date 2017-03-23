@@ -8,9 +8,14 @@ import android.widget.TextView
 import com.anastasiyayuragina.firenote.NoteListFragment.OnListFragmentInteractionListener
 import java.util.*
 
-class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractionListener?)
-    : RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder>() {
+class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder>() {
     private var values: ArrayList<Note> = ArrayList()
+    private lateinit var recyclerView: RecyclerView
+
+    constructor(listener: OnListFragmentInteractionListener?, recyclerView: RecyclerView) : this(listener) {
+        this.recyclerView = recyclerView
+        recyclerView.adapter = this
+    }
 
     fun addListNote(list: List<Note>) {
         values.addAll(list)
