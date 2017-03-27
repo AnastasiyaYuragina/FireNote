@@ -14,7 +14,7 @@ class NoteListFragment : Fragment() {
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
     private var listNote : ArrayList<Note> = ArrayList()
-    private lateinit var adapter : ListNoteRecyclerViewAdapter
+    private lateinit var rVadapter : ListNoteRecyclerViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +27,24 @@ class NoteListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.content_main, container, false)
+        val context = view.getContext()
+
+        if (context is OnListFragmentInteractionListener) {
+            listener = context as OnListFragmentInteractionListener?
+        } else {
+            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+        }
 
         // Set the adapter
         if (view is RecyclerView) {
-            val context = view.getContext()
             val recyclerView = view
             if (columnCount <= 1) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
+                recyclerView.layoutManager = LinearLayoutManager(context) as RecyclerView.LayoutManager?
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, columnCount)
             }
-            adapter = ListNoteRecyclerViewAdapter(listener, recyclerView)
+            rVadapter = ListNoteRecyclerViewAdapter(listener)
+            recyclerView.adapter = rVadapter
         }
         return view
     }
@@ -47,28 +54,19 @@ class NoteListFragment : Fragment() {
         fillingListNote()
     }
 
+    override fun onStop() {
+        super.onStop()
+        listener = null
+    }
+
     fun addListNote(list: ArrayList<Note>) {
-        adapter.addListNote(list)
+        rVadapter.addListNote(list)
     }
 
     fun fillingListNote() {
-        listNote.add(Note("note 1", System.currentTimeMillis()))
-        listNote.add(Note("note 2", System.currentTimeMillis() + 100000))
+        listNote.add(Note(Math.random().toInt(), "note 1 \n this is long text", System.currentTimeMillis()))
+        listNote.add(Note(Math.random().toInt(), "note 2", System.currentTimeMillis() + 182745))
         addListNote(listNote)
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
-            listener = context as OnListFragmentInteractionListener?
-        } else {
-            throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
     }
 
     interface OnListFragmentInteractionListener {

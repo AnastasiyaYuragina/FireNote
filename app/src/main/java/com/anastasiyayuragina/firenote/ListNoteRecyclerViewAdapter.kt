@@ -8,11 +8,17 @@ import android.widget.TextView
 import com.anastasiyayuragina.firenote.NoteListFragment.OnListFragmentInteractionListener
 import java.util.*
 
-class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder>() {
+class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder> {
     private var values: ArrayList<Note> = ArrayList()
+    private val listener:OnListFragmentInteractionListener?
     private lateinit var recyclerView: RecyclerView
 
-    constructor(listener: OnListFragmentInteractionListener?, recyclerView: RecyclerView) : this(listener) {
+    constructor(listener: OnListFragmentInteractionListener?) {
+        this.listener = listener
+    }
+
+    constructor(listener: OnListFragmentInteractionListener?, recyclerView: RecyclerView) {
+        this.listener = listener
         this.recyclerView = recyclerView
         recyclerView.adapter = this
     }
@@ -23,7 +29,8 @@ class ListNoteRecyclerViewAdapter(private val listener: OnListFragmentInteractio
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.preview_note, parent, false)
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.preview_note, parent, false)
         return ViewHolder(view)
     }
 

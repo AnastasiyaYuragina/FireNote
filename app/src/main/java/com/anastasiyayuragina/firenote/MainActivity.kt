@@ -1,6 +1,5 @@
 package com.anastasiyayuragina.firenote
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
@@ -9,6 +8,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInteractionListener {
+    lateinit private var fab: FloatingActionButton
 
     enum class FragmentType {
         NOTE_LIST,
@@ -25,9 +25,9 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
             replaceFragment(FragmentType.NOTE_LIST)
         }
 
-        val fab = findViewById(R.id.fab) as FloatingActionButton
+        fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
-            startActivity(Intent(this, AddNewNoteActivity::class.java))
+            readChangeNote(true)
         }
     }
 
@@ -65,13 +65,35 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         }
     }
 
-    fun readNote(noteText: String) {
-        val fragment = AddChangeNoteFragment.newInstance(noteText)
+    fun readChangeNote(noteText: String, readTextStatus: Boolean) {
+        var fragment = fragmentManager.findFragmentByTag(FragmentType.ADD_CHANGE_NOTE.name)
+
+        if (fragment == null)
+        {
+            fragment = AddChangeNoteFragment.newInstance(noteText, readTextStatus)
+        }
+
         fragmentManager.beginTransaction().replace(R.id.container, fragment,
-                NoteListFragment.toString()).addToBackStack(null).commit()
+                AddChangeNoteFragment.toString()).addToBackStack(null).commit()
+    }
+
+    fun readChangeNote(readTextStatus: Boolean) {
+        var fragment = fragmentManager.findFragmentByTag(FragmentType.ADD_CHANGE_NOTE.name)
+
+        if (fragment == null)
+        {
+            fragment = AddChangeNoteFragment.newInstance(readTextStatus)
+        }
+
+        fragmentManager.beginTransaction().replace(R.id.container, fragment,
+                AddChangeNoteFragment.toString()).addToBackStack(null).commit()
     }
 
     override fun onListFragmentInteraction(item: Note) {
-        readNote(item.getNoteText())
+        readChangeNote(item.getNoteText(), false)
+        fab.setImageResource(R.mipmap.ic_mode_edit)
+        fab.setOnClickListener {
+            readChangeNote(item.getNoteText(),true)
+        }
     }
 }
