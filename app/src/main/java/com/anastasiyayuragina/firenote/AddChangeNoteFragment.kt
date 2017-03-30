@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 
 class AddChangeNoteFragment : Fragment() {
-    private lateinit var textNote: String
+    private var textNote: String =""
     private var readNoteStatus: Boolean = false
 
     companion object {

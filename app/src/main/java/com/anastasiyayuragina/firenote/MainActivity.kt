@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         val toolbar = findViewById(R.id.toolbar) as Toolbar
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState == null) {
-            replaceFragment(FragmentType.NOTE_LIST)
-        }
-
         fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
             readChangeNote(true)
+        }
+
+        if (savedInstanceState == null) {
+            replaceFragment(FragmentType.NOTE_LIST)
         }
     }
 

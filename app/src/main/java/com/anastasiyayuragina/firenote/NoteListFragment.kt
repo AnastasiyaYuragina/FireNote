@@ -1,6 +1,5 @@
 package com.anastasiyayuragina.firenote
 
-import android.content.Context
 import android.os.Bundle
 import android.app.Fragment
 import android.support.v7.widget.GridLayoutManager
@@ -27,7 +26,7 @@ class NoteListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.content_main, container, false)
-        val context = view.getContext()
+        val context = view.context
 
         if (context is OnListFragmentInteractionListener) {
             listener = context as OnListFragmentInteractionListener?
