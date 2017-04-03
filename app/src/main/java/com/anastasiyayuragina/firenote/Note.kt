@@ -4,23 +4,23 @@ import java.text.DateFormat
 import java.util.*
 
 class Note {
-    private var noteID = 0
+    private var noteId = 0
     private var noteText: String = ""
     private var noteDate: String = ""
     val df : DateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM)
 
-    constructor(noteID: Int, noteText: String, date: Long) {
-        this.noteID = noteID
+    constructor(noteId: Int, noteText: String, date: Long) {
+        this.noteId = noteId
         this.noteText = noteText
         this.noteDate = df.format(Date(date))
     }
 
-    fun setNoteID(id: Int) {
-        noteID = id
+    fun setNoteId(id: Int) {
+        noteId = id
     }
 
-    fun getNoteID() : Int {
-        return noteID
+    fun getNoteId() : Int {
+        return noteId
     }
 
     fun setNoteText(text: String) {
