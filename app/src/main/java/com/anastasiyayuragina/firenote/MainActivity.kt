@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
 
         fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
-            readChangeNote(true)
+            readChangeNote("", true)
         }
 
         if (savedInstanceState == null) {
@@ -71,18 +71,6 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         if (fragment == null)
         {
             fragment = AddChangeNoteFragment.newInstance(noteText, readTextStatus)
-        }
-
-        fragmentManager.beginTransaction().replace(R.id.container, fragment,
-                AddChangeNoteFragment.toString()).addToBackStack(null).commit()
-    }
-
-    fun readChangeNote(readTextStatus: Boolean) {
-        var fragment = fragmentManager.findFragmentByTag(FragmentType.ADD_CHANGE_NOTE.name)
-
-        if (fragment == null)
-        {
-            fragment = AddChangeNoteFragment.newInstance(readTextStatus)
         }
 
         fragmentManager.beginTransaction().replace(R.id.container, fragment,
