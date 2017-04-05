@@ -28,6 +28,23 @@ class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAd
         notifyDataSetChanged()
     }
 
+    fun addNoteToList(note: Note) {
+        var noteAdded = false
+
+        for (i in values.indices) {
+            if (values[i].getNoteId() == note.getNoteId()){
+                values.add(i, note)
+                noteAdded = true
+            }
+        }
+
+        if (!noteAdded) {
+            values.add(note)
+        }
+
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.preview_note, parent, false)

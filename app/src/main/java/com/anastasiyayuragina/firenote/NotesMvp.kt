@@ -2,17 +2,24 @@ package com.anastasiyayuragina.firenote
 
 interface NotesMvp {
     interface Model {
-        fun saveNote(noteId: Int) // save  new or update note to server from device
-        fun updateNote(noteId: Int) // get new or update note to device from server
+        fun saveNoteToDB(note: Note) // save  new or update note to DB from device
+        fun updateNoteToDB(note: Note) // update note from devise to DB
+        fun firstLoadFromDB(listener: OnDataLoaded)
+        interface OnDataLoaded {
+            fun updateNoteFromDB(note: Note) // get new or update note to device from DB
+            fun updateNoteFromDB(list: ArrayList<Note>)
+        }
     }
 
     interface Presenter {
-        fun dataChanged(noteId: Int) // add or update note
-        fun updateNoteData(noteId: Int) // update note from server
+        fun dataChanged(note: Note) // add or update note
+        fun setView(view: View)
+        fun loadData()
     }
 
     interface View {
-        fun setData(noteId: Int) // add to list new or update note
+        fun setData(note: Note) // add to list new or update note
+        fun addListNote(list: ArrayList<Note>)
     }
 
 }

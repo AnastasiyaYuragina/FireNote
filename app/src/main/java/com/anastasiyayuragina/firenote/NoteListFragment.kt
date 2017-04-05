@@ -9,11 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class NoteListFragment : Fragment() {
+class NoteListFragment : Fragment(), NotesMvp.View {
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
     private var listNote : ArrayList<Note> = ArrayList()
     private lateinit var rVadapter : ListNoteRecyclerViewAdapter
+    private lateinit var presenter : NotesMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +22,16 @@ class NoteListFragment : Fragment() {
         if (arguments != null) {
             columnCount = arguments.getInt(ARG_COLUMN_COUNT)
         }
+
+        presenter = NotesPresenter()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.content_main, container, false)
         val context = view.context
+
+        presenter.loadData()
 
         if (context is OnListFragmentInteractionListener) {
             listener = context as OnListFragmentInteractionListener?
@@ -51,6 +56,7 @@ class NoteListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         fillingListNote()
+        presenter.setView(this)
     }
 
     override fun onStop() {
@@ -58,14 +64,18 @@ class NoteListFragment : Fragment() {
         listener = null
     }
 
-    fun addListNote(list: ArrayList<Note>) {
+    override fun addListNote(list: ArrayList<Note>) {
         rVadapter.addListNote(list)
+    }
+
+    override fun setData(note: Note) {
+        rVadapter.addNoteToList(note)
     }
 
     fun fillingListNote() {
         listNote.add(Note(Math.random().toInt(), "note 1 \n this is long text", System.currentTimeMillis()))
         listNote.add(Note(Math.random().toInt(), "note 2", System.currentTimeMillis() + 182745))
-        addListNote(listNote)
+//        addListNote(listNote)
     }
 
     interface OnListFragmentInteractionListener {
