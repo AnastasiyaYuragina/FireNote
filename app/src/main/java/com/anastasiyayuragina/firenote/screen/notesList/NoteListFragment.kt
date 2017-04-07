@@ -1,4 +1,4 @@
-package com.anastasiyayuragina.firenote
+package com.anastasiyayuragina.firenote.screen.notesList
 
 import android.os.Bundle
 import android.app.Fragment
@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.anastasiyayuragina.firenote.ListNoteRecyclerViewAdapter
+import com.anastasiyayuragina.firenote.Note
+import com.anastasiyayuragina.firenote.R
 
 class NoteListFragment : Fragment(), NotesMvp.View {
     private var columnCount = 1

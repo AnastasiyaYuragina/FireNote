@@ -1,5 +1,6 @@
-package com.anastasiyayuragina.firenote
+package com.anastasiyayuragina.firenote.screen.notesList
 
+import com.anastasiyayuragina.firenote.Note
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
@@ -11,6 +12,19 @@ class NotesModel : NotesMvp.Model {
     private val database: DatabaseReference? = FirebaseDatabase.getInstance().reference.child("notes")
 
     override fun loadFromDB(listener: NotesMvp.Model.OnDataLoaded) {
+        val noteListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                val note = dataSnapshot.getValue(Note::class.java)
+                listener.updateNoteFromDB(note)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Getting Post failed, log a message
+                // ...
+            }
+        }
+
         val allNotesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI
@@ -31,31 +45,8 @@ class NotesModel : NotesMvp.Model {
             }
         }
 
-        val noteListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                // Get Post object and use the values to update the UI
-                val note = dataSnapshot.getValue(Note::class.java)
-                listener.updateNoteFromDB(note)
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Getting Post failed, log a message
-                // ...
-            }
-        }
-
         database!!.addListenerForSingleValueEvent(allNotesListener)
-        database.addValueEventListener(noteListener)
-    }
-
-    override fun saveNoteToDB(note: Note) {
-        val id = note.getNoteId()
-        database!!.child("notes").child("$id").child("text").setValue(note.getNoteText())
-        database.child("notes").child("$id").child("date").setValue(note.getNoteDate())
-    }
-
-    override fun updateNoteToDB(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//        database.addValueEventListener(noteListener)
     }
 }
 

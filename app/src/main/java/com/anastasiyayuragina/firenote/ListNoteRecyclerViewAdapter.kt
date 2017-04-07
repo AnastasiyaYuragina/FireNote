@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.anastasiyayuragina.firenote.NoteListFragment.OnListFragmentInteractionListener
+import com.anastasiyayuragina.firenote.screen.notesList.NoteListFragment.OnListFragmentInteractionListener
 import java.util.*
 
 class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder> {

@@ -1,4 +1,6 @@
-package com.anastasiyayuragina.firenote
+package com.anastasiyayuragina.firenote.screen.notesList
+
+import com.anastasiyayuragina.firenote.Note
 
 class NotesPresenter : NotesMvp.Presenter, NotesMvp.Model.OnDataLoaded {
     private val model : NotesMvp.Model = NotesModel()
@@ -6,10 +8,6 @@ class NotesPresenter : NotesMvp.Presenter, NotesMvp.Model.OnDataLoaded {
 
     override fun loadData() {
         model.loadFromDB(this)
-    }
-
-    override fun dataChanged(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun updateNoteFromDB(note: Note) {

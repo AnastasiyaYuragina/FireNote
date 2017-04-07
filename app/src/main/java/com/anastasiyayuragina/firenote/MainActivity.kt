@@ -1,14 +1,18 @@
 package com.anastasiyayuragina.firenote
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import com.anastasiyayuragina.firenote.screen.notesList.NoteListFragment
 
 class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInteractionListener {
     lateinit private var fab: FloatingActionButton
+    private val ID_NOTE = "text_note"
+    private val NEW_NOTE = "new_note"
 
     enum class FragmentType {
         NOTE_LIST,
@@ -23,7 +27,11 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
 
         fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
-            readChangeNote("", true)
+//            readChangeNote("", true)
+            val intent = Intent(this, AddNewNoteActivity::class.java)
+            intent.putExtra(ID_NOTE, -1)
+            intent.putExtra(NEW_NOTE, true)
+            startActivity(intent)
         }
 
         if (savedInstanceState == null) {
@@ -43,7 +51,6 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-
         if (id == R.id.action_settings) {
             return true
         }
@@ -54,8 +61,7 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
     fun replaceFragment(type: FragmentType) {
         var fragment = fragmentManager.findFragmentByTag(type.name)
 
-        if (fragment == null)
-        {
+        if (fragment == null) {
             fragment = NoteListFragment.newInstance(1)
         }
 
@@ -65,23 +71,19 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         }
     }
 
-    fun readChangeNote(noteText: String, readTextStatus: Boolean) {
-        var fragment = fragmentManager.findFragmentByTag(FragmentType.ADD_CHANGE_NOTE.name)
 
-        if (fragment == null)
-        {
-            fragment = AddChangeNoteFragment.newInstance(noteText, readTextStatus)
-        }
-
-        fragmentManager.beginTransaction().replace(R.id.container, fragment,
-                AddChangeNoteFragment.toString()).addToBackStack(null).commit()
-    }
 
     override fun onListFragmentInteraction(item: Note) {
-        readChangeNote(item.getNoteText(), false)
-        fab.setImageResource(R.mipmap.ic_mode_edit)
-        fab.setOnClickListener {
-            readChangeNote(item.getNoteText(),true)
-        }
+
+        val intent = Intent(this, AddNewNoteActivity::class.java)
+        intent.putExtra(ID_NOTE, item.id)
+        intent.putExtra(NEW_NOTE, false)
+        startActivity(intent)
+
+//        readChangeNote(item.getNoteText(), false)
+//        fab.setImageResource(R.mipmap.ic_mode_edit)
+//        fab.setOnClickListener {
+//            readChangeNote(item.getNoteText(),true)
+//        }
     }
 }

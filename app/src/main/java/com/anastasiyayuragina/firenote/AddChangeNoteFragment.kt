@@ -8,26 +8,18 @@ import android.view.ViewGroup
 import android.widget.EditText
 
 class AddChangeNoteFragment : Fragment() {
-    private var textNote: String =""
+    private var idNote: Int = 0
     private var readNoteStatus: Boolean = false
 
     companion object {
-        private val NOTE_TEXT = "note-text"
-        private val READ_NOTE_STATUS = "read-note-status"
+        private val NOTE_ID = "note_id"
+        private val READ_NOTE_STATUS = "read_note_status"
 
-        fun newInstance(noteText: String, readTextStatus: Boolean): AddChangeNoteFragment {
+        fun newInstance(noteId: Int, readTextStatus: Boolean): AddChangeNoteFragment {
             val fragment = AddChangeNoteFragment()
             val args = Bundle()
-            args.putString(NOTE_TEXT, noteText)
+            args.putInt(NOTE_ID, noteId)
             args.putBoolean(READ_NOTE_STATUS, readTextStatus)
-            fragment.arguments = args
-            return fragment
-        }
-
-        fun newInstance(readText: Boolean): AddChangeNoteFragment {
-            val fragment = AddChangeNoteFragment()
-            val args = Bundle()
-            args.putBoolean(READ_NOTE_STATUS, readText)
             fragment.arguments = args
             return fragment
         }
@@ -36,9 +28,7 @@ class AddChangeNoteFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (arguments.getString(NOTE_TEXT) != null) {
-            textNote = arguments.getString(NOTE_TEXT)
-        }
+        idNote = arguments.getInt(NOTE_ID)
         readNoteStatus = arguments.getBoolean(READ_NOTE_STATUS)
     }
 
@@ -48,7 +38,7 @@ class AddChangeNoteFragment : Fragment() {
         val addChangeText = view.findViewById(R.id.note_text) as EditText
 
         addChangeText.isEnabled = readNoteStatus
-        addChangeText.setText(textNote)
+        addChangeText.setText(idNote)
 
         return view
     }
