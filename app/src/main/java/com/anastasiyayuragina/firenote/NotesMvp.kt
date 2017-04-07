@@ -4,7 +4,7 @@ interface NotesMvp {
     interface Model {
         fun saveNoteToDB(note: Note) // save  new or update note to DB from device
         fun updateNoteToDB(note: Note) // update note from devise to DB
-        fun firstLoadFromDB(listener: OnDataLoaded)
+        fun loadFromDB(listener: OnDataLoaded)
         interface OnDataLoaded {
             fun updateNoteFromDB(note: Note) // get new or update note to device from DB
             fun updateNoteFromDB(list: ArrayList<Note>)

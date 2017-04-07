@@ -12,8 +12,7 @@ import android.view.ViewGroup
 class NoteListFragment : Fragment(), NotesMvp.View {
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
-    private var listNote : ArrayList<Note> = ArrayList()
-    private lateinit var rVadapter : ListNoteRecyclerViewAdapter
+    private lateinit var rvAdapter : ListNoteRecyclerViewAdapter
     private lateinit var presenter : NotesMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,15 +46,14 @@ class NoteListFragment : Fragment(), NotesMvp.View {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, columnCount)
             }
-            rVadapter = ListNoteRecyclerViewAdapter(listener)
-            recyclerView.adapter = rVadapter
+            rvAdapter = ListNoteRecyclerViewAdapter(listener)
+            recyclerView.adapter = rvAdapter
         }
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        fillingListNote()
         presenter.setView(this)
     }
 
@@ -65,17 +63,11 @@ class NoteListFragment : Fragment(), NotesMvp.View {
     }
 
     override fun addListNote(list: ArrayList<Note>) {
-        rVadapter.addListNote(list)
+        rvAdapter.addListNote(list)
     }
 
     override fun setData(note: Note) {
-        rVadapter.addNoteToList(note)
-    }
-
-    fun fillingListNote() {
-        listNote.add(Note(Math.random().toInt(), "note 1 \n this is long text", System.currentTimeMillis()))
-        listNote.add(Note(Math.random().toInt(), "note 2", System.currentTimeMillis() + 182745))
-//        addListNote(listNote)
+        rvAdapter.addNoteToList(note)
     }
 
     interface OnListFragmentInteractionListener {

@@ -5,7 +5,7 @@ class NotesPresenter : NotesMvp.Presenter, NotesMvp.Model.OnDataLoaded {
     private lateinit var view : NotesMvp.View
 
     override fun loadData() {
-        model.firstLoadFromDB(this)
+        model.loadFromDB(this)
     }
 
     override fun dataChanged(note: Note) {
