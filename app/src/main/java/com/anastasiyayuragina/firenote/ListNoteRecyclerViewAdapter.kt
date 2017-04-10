@@ -32,7 +32,7 @@ class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAd
         var noteAdded = false
 
         for (i in values.indices) {
-            if (values[i].getNoteId() == note.getNoteId()){
+            if (values[i].id == note.id){
                 values.add(i, note)
                 noteAdded = true
             }
@@ -52,7 +52,13 @@ class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAd
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.noteText.text = values[position].getNoteText()
+        val text = values[position].text
+        if (text.length > 20) {
+            holder.noteText.text = text.substring(0, 19)
+        } else {
+            holder.noteText.text = text
+        }
+
         holder.date.text = values[position].getNoteDate()
 
         holder.view.setOnClickListener {

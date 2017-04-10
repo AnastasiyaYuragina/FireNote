@@ -2,7 +2,7 @@ package com.anastasiyayuragina.firenote.screen.notesList
 
 import com.anastasiyayuragina.firenote.Note
 
-interface NotesMvp {
+interface NotesListMvp {
     interface Model {
         fun loadFromDB(listener: OnDataLoaded)
         interface OnDataLoaded {

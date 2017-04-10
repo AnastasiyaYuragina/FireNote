@@ -15,16 +15,7 @@ class Note() {
         this.date = date
     }
 
-    fun getNoteId() : Int {
-        return id
-    }
-
-    fun getNoteText() : String {
-       return text
-    }
-
     fun getNoteDate() : String {
         return df.format(Date(date))
     }
-
 }

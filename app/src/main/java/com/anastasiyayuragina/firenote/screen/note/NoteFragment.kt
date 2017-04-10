@@ -1,4 +1,4 @@
-package com.anastasiyayuragina.firenote
+package com.anastasiyayuragina.firenote.screen.note
 
 import android.app.Fragment
 import android.os.Bundle
@@ -6,17 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import com.anastasiyayuragina.firenote.Note
+import com.anastasiyayuragina.firenote.R
 
-class AddChangeNoteFragment : Fragment() {
+class NoteFragment : Fragment(), NoteMvp.View {
     private var idNote: Int = 0
     private var readNoteStatus: Boolean = false
+    private lateinit var addChangeText: EditText
+    private lateinit var presenter : NoteMvp.Presenter
 
     companion object {
         private val NOTE_ID = "note_id"
         private val READ_NOTE_STATUS = "read_note_status"
 
-        fun newInstance(noteId: Int, readTextStatus: Boolean): AddChangeNoteFragment {
-            val fragment = AddChangeNoteFragment()
+        fun newInstance(noteId: Int, readTextStatus: Boolean): NoteFragment {
+            val fragment = NoteFragment()
             val args = Bundle()
             args.putInt(NOTE_ID, noteId)
             args.putBoolean(READ_NOTE_STATUS, readTextStatus)
@@ -30,16 +34,26 @@ class AddChangeNoteFragment : Fragment() {
 
         idNote = arguments.getInt(NOTE_ID)
         readNoteStatus = arguments.getBoolean(READ_NOTE_STATUS)
+
+        presenter = NotePresenter()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater!!.inflate(R.layout.viewing_of_a_note, container, false)
 
-        val addChangeText = view.findViewById(R.id.note_text) as EditText
-
-        addChangeText.isEnabled = readNoteStatus
-        addChangeText.setText(idNote)
+        addChangeText = view.findViewById(R.id.note_text) as EditText
+        presenter.loadNote(idNote)
 
         return view
+    }
+
+    override fun setData(note: Note) {
+        addChangeText.isEnabled = readNoteStatus
+        addChangeText.setText(note.text)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        presenter.setView(this)
     }
 }

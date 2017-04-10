@@ -11,12 +11,11 @@ import com.anastasiyayuragina.firenote.screen.notesList.NoteListFragment
 
 class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInteractionListener {
     lateinit private var fab: FloatingActionButton
-    private val ID_NOTE = "text_note"
+    private val ID_NOTE = "id_note"
     private val NEW_NOTE = "new_note"
 
     enum class FragmentType {
-        NOTE_LIST,
-        ADD_CHANGE_NOTE
+        NOTE_LIST
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
 
         fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
-//            readChangeNote("", true)
             val intent = Intent(this, AddNewNoteActivity::class.java)
             intent.putExtra(ID_NOTE, -1)
             intent.putExtra(NEW_NOTE, true)
@@ -67,11 +65,9 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
 
         if (type == FragmentType.NOTE_LIST) {
             fragmentManager.beginTransaction().replace(R.id.container, fragment,
-                    NoteListFragment.toString()).commit()
+                    FragmentType.NOTE_LIST.name).commit()
         }
     }
-
-
 
     override fun onListFragmentInteraction(item: Note) {
 
@@ -79,11 +75,5 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         intent.putExtra(ID_NOTE, item.id)
         intent.putExtra(NEW_NOTE, false)
         startActivity(intent)
-
-//        readChangeNote(item.getNoteText(), false)
-//        fab.setImageResource(R.mipmap.ic_mode_edit)
-//        fab.setOnClickListener {
-//            readChangeNote(item.getNoteText(),true)
-//        }
     }
 }

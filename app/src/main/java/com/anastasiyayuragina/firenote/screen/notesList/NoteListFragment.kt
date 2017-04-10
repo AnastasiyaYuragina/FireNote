@@ -12,11 +12,11 @@ import com.anastasiyayuragina.firenote.ListNoteRecyclerViewAdapter
 import com.anastasiyayuragina.firenote.Note
 import com.anastasiyayuragina.firenote.R
 
-class NoteListFragment : Fragment(), NotesMvp.View {
+class NoteListFragment : Fragment(), NotesListMvp.View {
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var rvAdapter : ListNoteRecyclerViewAdapter
-    private lateinit var presenter : NotesMvp.Presenter
+    private lateinit var presenter : NotesListMvp.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +25,7 @@ class NoteListFragment : Fragment(), NotesMvp.View {
             columnCount = arguments.getInt(ARG_COLUMN_COUNT)
         }
 
-        presenter = NotesPresenter()
+        presenter = NotesListPresenter()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
