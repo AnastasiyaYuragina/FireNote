@@ -24,6 +24,7 @@ class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAd
     }
 
     fun addListNote(list: List<Note>) {
+        values.clear()
         values.addAll(list)
         notifyDataSetChanged()
     }

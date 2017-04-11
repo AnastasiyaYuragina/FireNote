@@ -1,19 +1,13 @@
 package com.anastasiyayuragina.firenote.screen.notesList
 
 import com.anastasiyayuragina.firenote.Note
-import com.anastasiyayuragina.firenote.Singleton
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.*
 import kotlin.collections.ArrayList
 
 class NotesListModel : NotesListMvp.Model {
-    private var database: DatabaseReference? = null
+    private val database: DatabaseReference? = FirebaseDatabase.getInstance().reference.child("notes")
 
     override fun loadFromDB(listener: NotesListMvp.Model.OnDataLoaded) {
-        database = Singleton.instance.getDatabase()
-
         val notesListener = object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Get Post object and use the values to update the UI

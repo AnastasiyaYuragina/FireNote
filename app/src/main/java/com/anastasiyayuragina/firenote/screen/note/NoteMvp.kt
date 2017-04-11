@@ -10,15 +10,18 @@ interface NoteMvp {
         }
 
         fun saveNoteToDB(note: Note)
+        fun addNoteToDB(note: Note)
     }
 
     interface Presenter {
         fun setView(view: View)
         fun loadNote(idNote: Int)
-        fun saveNoteToDB(note: Note)
+        fun saveNoteToDB(note: Note, newNote: Boolean)
     }
 
     interface View {
         fun setData(note: Note)
+        fun addNote()
+        fun changeNote()
     }
 }

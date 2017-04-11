@@ -42,7 +42,10 @@ class NoteFragment : Fragment(), NoteMvp.View {
         val view = inflater!!.inflate(R.layout.viewing_of_a_note, container, false)
 
         addChangeText = view.findViewById(R.id.note_text) as EditText
-        presenter.loadNote(idNote)
+
+        if (idNote > 0) {
+            presenter.loadNote(idNote)
+        }
 
         return view
     }
@@ -55,5 +58,25 @@ class NoteFragment : Fragment(), NoteMvp.View {
     override fun onStart() {
         super.onStart()
         presenter.setView(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        if (idNote > 0) {
+            changeNote()
+        } else {
+            addNote()
+        }
+    }
+
+    override fun addNote() {
+        presenter.saveNoteToDB(Note(System.currentTimeMillis(), idNote + 1,
+                addChangeText.text.toString()), true)
+    }
+
+    override fun changeNote() {
+        presenter.saveNoteToDB(Note(System.currentTimeMillis(), idNote,
+                addChangeText.text.toString()), false)
     }
 }

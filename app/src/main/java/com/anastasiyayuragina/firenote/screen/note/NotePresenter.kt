@@ -18,7 +18,11 @@ class NotePresenter : NoteMvp.Presenter, NoteMvp.Model.OnDataLoaded{
         model.loadNoteFromDB(this, idNote)
     }
 
-    override fun saveNoteToDB(note: Note) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun saveNoteToDB(note: Note, newNote: Boolean) {
+        if (newNote) {
+            model.addNoteToDB(note)
+        } else {
+            model.saveNoteToDB(note)
+        }
     }
 }

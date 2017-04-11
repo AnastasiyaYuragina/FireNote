@@ -1,20 +1,22 @@
 package com.anastasiyayuragina.firenote
 
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.app.AppCompatActivity
 import android.widget.ImageButton
 import com.anastasiyayuragina.firenote.screen.note.NoteFragment
 
 class AddNewNoteActivity : AppCompatActivity() {
     private val ID_NOTE = "id_note"
-    private val NEW_NOTE = "new_note"
+    private val CHANGE_NOTE = "change_note"
+    lateinit private var fab: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_activity)
 
-        val idNote = intent.getIntExtra(ID_NOTE, -1)
-        val newNote = intent.getBooleanExtra(NEW_NOTE, false)
+        val idNote = intent.getIntExtra(ID_NOTE, 0)
+        val newNote = intent.getBooleanExtra(CHANGE_NOTE, false)
 
         readChangeNote(idNote, newNote)
 
@@ -22,14 +24,15 @@ class AddNewNoteActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             onBackPressed()
         }
+
+        fab = findViewById(R.id.floatingActionButton) as FloatingActionButton
+        fab.setOnClickListener {
+            readChangeNote(idNote, true)
+        }
     }
 
     fun readChangeNote(noteId: Int, readTextStatus: Boolean) {
-        var fragment = fragmentManager.findFragmentByTag(NoteFragment.toString())
-
-        if (fragment == null) {
-            fragment = NoteFragment.newInstance(noteId, readTextStatus)
-        }
+        val fragment = NoteFragment.newInstance(noteId, readTextStatus)
 
         fragmentManager.beginTransaction().replace(R.id.container, fragment,
                 NoteFragment.toString()).commit()

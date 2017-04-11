@@ -12,7 +12,7 @@ import com.anastasiyayuragina.firenote.screen.notesList.NoteListFragment
 class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInteractionListener {
     lateinit private var fab: FloatingActionButton
     private val ID_NOTE = "id_note"
-    private val NEW_NOTE = "new_note"
+    private val CHANGE_NOTE = "change_note"
 
     enum class FragmentType {
         NOTE_LIST
@@ -27,8 +27,8 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
             val intent = Intent(this, AddNewNoteActivity::class.java)
-            intent.putExtra(ID_NOTE, -1)
-            intent.putExtra(NEW_NOTE, true)
+            intent.putExtra(ID_NOTE, 0)
+            intent.putExtra(CHANGE_NOTE, true)
             startActivity(intent)
         }
 
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
 
         val intent = Intent(this, AddNewNoteActivity::class.java)
         intent.putExtra(ID_NOTE, item.id)
-        intent.putExtra(NEW_NOTE, false)
+        intent.putExtra(CHANGE_NOTE, false)
         startActivity(intent)
     }
 }
