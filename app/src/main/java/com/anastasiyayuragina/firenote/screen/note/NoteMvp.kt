@@ -4,7 +4,7 @@ import com.anastasiyayuragina.firenote.Note
 
 interface NoteMvp {
     interface Model {
-        fun loadNoteFromDB(listener: OnDataLoaded, idNote: Int)
+        fun loadNoteFromDB(listener: OnDataLoaded, idNote: String)
         interface OnDataLoaded {
             fun updateNoteFromDB(note: Note)
         }
@@ -15,7 +15,7 @@ interface NoteMvp {
 
     interface Presenter {
         fun setView(view: View)
-        fun loadNote(idNote: Int)
+        fun loadNote(idNote: String)
         fun saveNoteToDB(note: Note, newNote: Boolean)
     }
 

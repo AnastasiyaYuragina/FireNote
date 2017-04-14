@@ -14,7 +14,7 @@ class NotePresenter : NoteMvp.Presenter, NoteMvp.Model.OnDataLoaded{
         this.view = view
     }
 
-    override fun loadNote(idNote: Int) {
+    override fun loadNote(idNote: String) {
         model.loadNoteFromDB(this, idNote)
     }
 

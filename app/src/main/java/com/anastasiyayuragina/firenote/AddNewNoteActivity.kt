@@ -15,7 +15,7 @@ class AddNewNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.note_activity)
 
-        val idNote = intent.getIntExtra(ID_NOTE, 0)
+        val idNote = intent.getStringExtra(ID_NOTE)
         val newNote = intent.getBooleanExtra(CHANGE_NOTE, false)
 
         readChangeNote(idNote, newNote)
@@ -31,7 +31,7 @@ class AddNewNoteActivity : AppCompatActivity() {
         }
     }
 
-    fun readChangeNote(noteId: Int, readTextStatus: Boolean) {
+    fun readChangeNote(noteId: String, readTextStatus: Boolean) {
         val fragment = NoteFragment.newInstance(noteId, readTextStatus)
 
         fragmentManager.beginTransaction().replace(R.id.container, fragment,

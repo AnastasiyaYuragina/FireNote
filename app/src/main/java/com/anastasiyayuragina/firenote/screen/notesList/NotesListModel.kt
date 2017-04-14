@@ -2,6 +2,7 @@ package com.anastasiyayuragina.firenote.screen.notesList
 
 import com.anastasiyayuragina.firenote.Note
 import com.google.firebase.database.*
+import java.util.function.Consumer
 import kotlin.collections.ArrayList
 
 class NotesListModel : NotesListMvp.Model {
@@ -13,11 +14,9 @@ class NotesListModel : NotesListMvp.Model {
                 // Get Post object and use the values to update the UI
 
                 val list : ArrayList<Note> = ArrayList()
-                var i = 1
-                while (i <= dataSnapshot.childrenCount) {
-                    val note = dataSnapshot.child("$i").getValue(Note::class.java)
+                dataSnapshot.children.forEach {
+                    val note = it.getValue(Note::class.java)
                     list.add(note)
-                    i++
                 }
                 listener.updateNoteFromDB(list)
             }

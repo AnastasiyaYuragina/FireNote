@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInterac
         fab = findViewById(R.id.fab) as FloatingActionButton
         fab.setOnClickListener {
             val intent = Intent(this, AddNewNoteActivity::class.java)
-            intent.putExtra(ID_NOTE, 0)
+            intent.putExtra(ID_NOTE, "")
             intent.putExtra(CHANGE_NOTE, true)
             startActivity(intent)
         }

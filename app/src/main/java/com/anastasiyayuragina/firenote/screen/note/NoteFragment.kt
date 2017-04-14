@@ -10,7 +10,7 @@ import com.anastasiyayuragina.firenote.Note
 import com.anastasiyayuragina.firenote.R
 
 class NoteFragment : Fragment(), NoteMvp.View {
-    private var idNote: Int = 0
+    private var idNote: String = ""
     private var readNoteStatus: Boolean = false
     private lateinit var addChangeText: EditText
     private lateinit var presenter : NoteMvp.Presenter
@@ -19,10 +19,10 @@ class NoteFragment : Fragment(), NoteMvp.View {
         private val NOTE_ID = "note_id"
         private val READ_NOTE_STATUS = "read_note_status"
 
-        fun newInstance(noteId: Int, readTextStatus: Boolean): NoteFragment {
+        fun newInstance(noteId: String, readTextStatus: Boolean): NoteFragment {
             val fragment = NoteFragment()
             val args = Bundle()
-            args.putInt(NOTE_ID, noteId)
+            args.putString(NOTE_ID, noteId)
             args.putBoolean(READ_NOTE_STATUS, readTextStatus)
             fragment.arguments = args
             return fragment
@@ -32,7 +32,7 @@ class NoteFragment : Fragment(), NoteMvp.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        idNote = arguments.getInt(NOTE_ID)
+        idNote = arguments.getString(NOTE_ID)
         readNoteStatus = arguments.getBoolean(READ_NOTE_STATUS)
 
         presenter = NotePresenter()
@@ -43,7 +43,7 @@ class NoteFragment : Fragment(), NoteMvp.View {
 
         addChangeText = view.findViewById(R.id.note_text) as EditText
 
-        if (idNote > 0) {
+        if (!idNote.isEmpty()) {
             presenter.loadNote(idNote)
         }
 
@@ -63,7 +63,7 @@ class NoteFragment : Fragment(), NoteMvp.View {
     override fun onStop() {
         super.onStop()
 
-        if (idNote > 0) {
+        if (!idNote.isEmpty()) {
             changeNote()
         } else {
             addNote()
@@ -71,7 +71,7 @@ class NoteFragment : Fragment(), NoteMvp.View {
     }
 
     override fun addNote() {
-        presenter.saveNoteToDB(Note(System.currentTimeMillis(), idNote + 1,
+        presenter.saveNoteToDB(Note(System.currentTimeMillis(), "",
                 addChangeText.text.toString()), true)
     }
 
