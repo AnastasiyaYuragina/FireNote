@@ -1,7 +1,9 @@
 package com.anastasiyayuragina.firenote.screen.notesList
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
+import android.content.Context
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -10,9 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.anastasiyayuragina.firenote.ListNoteRecyclerViewAdapter
 import com.anastasiyayuragina.firenote.Note
+import com.anastasiyayuragina.firenote.OnListFragmentLongClick
 import com.anastasiyayuragina.firenote.R
 
-class NoteListFragment : Fragment(), NotesListMvp.View {
+class NoteListFragment : Fragment(), NotesListMvp.View, OnListFragmentLongClick {
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
     private lateinit var rvAdapter : ListNoteRecyclerViewAdapter
@@ -49,7 +52,7 @@ class NoteListFragment : Fragment(), NotesListMvp.View {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, columnCount)
             }
-            rvAdapter = ListNoteRecyclerViewAdapter(listener)
+            rvAdapter = ListNoteRecyclerViewAdapter(listener, this)
             recyclerView.adapter = rvAdapter
         }
         return view
@@ -73,8 +76,11 @@ class NoteListFragment : Fragment(), NotesListMvp.View {
         rvAdapter.addNoteToList(note)
     }
 
+    override fun onListFragmentLongClick(item: Note) {
+        presenter.deleteNote(item)
+    }
+
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
         fun onListFragmentInteraction(item: Note)
     }
 

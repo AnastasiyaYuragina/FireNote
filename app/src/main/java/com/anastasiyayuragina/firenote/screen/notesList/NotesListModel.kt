@@ -29,5 +29,10 @@ class NotesListModel : NotesListMvp.Model {
 
         database!!.addValueEventListener(notesListener)
     }
+
+    override fun deleteNote(note: Note) {
+        val id  = note.id
+        database!!.child(id).removeValue()
+    }
 }
 

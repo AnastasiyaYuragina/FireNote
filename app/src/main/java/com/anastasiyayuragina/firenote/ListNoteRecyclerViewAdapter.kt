@@ -1,5 +1,6 @@
 package com.anastasiyayuragina.firenote
 
+import android.app.AlertDialog
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +12,17 @@ import java.util.*
 class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAdapter.ViewHolder> {
     private var values: ArrayList<Note> = ArrayList()
     private val listener:OnListFragmentInteractionListener?
+    private val longClickListener:OnListFragmentLongClick?
     private lateinit var recyclerView: RecyclerView
 
-    constructor(listener: OnListFragmentInteractionListener?) {
+    constructor(listener: OnListFragmentInteractionListener?, longClickListener: OnListFragmentLongClick?) {
         this.listener = listener
+        this.longClickListener = longClickListener
     }
 
-    constructor(listener: OnListFragmentInteractionListener?, recyclerView: RecyclerView) {
+    constructor(listener: OnListFragmentInteractionListener?, recyclerView: RecyclerView, longClickListener: OnListFragmentLongClick?) {
         this.listener = listener
+        this.longClickListener = longClickListener
         this.recyclerView = recyclerView
         recyclerView.adapter = this
     }
@@ -64,6 +68,10 @@ class ListNoteRecyclerViewAdapter :  RecyclerView.Adapter<ListNoteRecyclerViewAd
 
         holder.view.setOnClickListener {
             listener?.onListFragmentInteraction(values[position])
+        }
+        holder.view.setOnLongClickListener {
+            longClickListener?.onListFragmentLongClick(values[position])
+            true
         }
     }
 

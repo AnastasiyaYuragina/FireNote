@@ -3,7 +3,7 @@ package com.anastasiyayuragina.firenote.screen.notesList
 import com.anastasiyayuragina.firenote.Note
 
 class NotesListPresenter : NotesListMvp.Presenter, NotesListMvp.Model.OnDataLoaded {
-    private val model : NotesListMvp.Model = NotesListModel()
+        private val model : NotesListMvp.Model = NotesListModel()
     private lateinit var view : NotesListMvp.View
 
     override fun loadData() {
@@ -20,5 +20,9 @@ class NotesListPresenter : NotesListMvp.Presenter, NotesListMvp.Model.OnDataLoad
 
     override fun setView(view: NotesListMvp.View) {
         this.view = view
+    }
+
+    override fun deleteNote(note: Note) {
+        model.deleteNote(note)
     }
 }
