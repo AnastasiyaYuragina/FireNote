@@ -3,7 +3,6 @@ package com.anastasiyayuragina.firenote.screen.notesList
 import android.app.AlertDialog
 import android.os.Bundle
 import android.app.Fragment
-import android.content.Context
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -77,7 +76,11 @@ class NoteListFragment : Fragment(), NotesListMvp.View, OnListFragmentLongClick 
     }
 
     override fun onListFragmentLongClick(item: Note) {
-        presenter.deleteNote(item)
+        val dialog = AlertDialog.Builder(activity)
+
+        dialog.setMessage("Delete note?")
+                .setPositiveButton("Ok", { _, _: Int -> presenter.deleteNote(item) })
+                .setNegativeButton("Cancel", { _, _ -> }).show()
     }
 
     interface OnListFragmentInteractionListener {
