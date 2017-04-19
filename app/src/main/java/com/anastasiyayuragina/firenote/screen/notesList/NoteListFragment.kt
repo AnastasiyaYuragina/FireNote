@@ -23,6 +23,8 @@ class NoteListFragment : Fragment(), NotesListMvp.View, OnListFragmentLongClick 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        retainInstance = true
+
         if (arguments != null) {
             columnCount = arguments.getInt(ARG_COLUMN_COUNT)
         }

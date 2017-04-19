@@ -36,6 +36,8 @@ class NoteFragment : Fragment(), NoteMvp.View {
         readNoteStatus = arguments.getBoolean(READ_NOTE_STATUS)
 
         presenter = NotePresenter()
+
+        retainInstance = true
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -71,8 +73,10 @@ class NoteFragment : Fragment(), NoteMvp.View {
     }
 
     override fun addNote() {
-        presenter.saveNoteToDB(Note(System.currentTimeMillis(), "",
-                addChangeText.text.toString()), true)
+        if (!addChangeText.text.isEmpty()) {
+            presenter.saveNoteToDB(Note(System.currentTimeMillis(), "",
+                    addChangeText.text.toString()), true)
+        }
     }
 
     override fun changeNote() {

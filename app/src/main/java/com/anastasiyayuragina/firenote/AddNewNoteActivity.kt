@@ -18,7 +18,9 @@ class AddNewNoteActivity : AppCompatActivity() {
         val idNote = intent.getStringExtra(ID_NOTE)
         val newNote = intent.getBooleanExtra(CHANGE_NOTE, false)
 
-        readChangeNote(idNote, newNote)
+        if (savedInstanceState == null) {
+            readChangeNote(idNote, newNote)
+        }
 
         val backButton = findViewById(R.id.back) as ImageButton
         backButton.setOnClickListener {

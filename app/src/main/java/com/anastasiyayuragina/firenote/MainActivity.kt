@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import com.anastasiyayuragina.firenote.screen.notesList.NoteListFragment
 
+
 class MainActivity : AppCompatActivity(), NoteListFragment.OnListFragmentInteractionListener {
     lateinit private var fab: FloatingActionButton
     private val ID_NOTE = "id_note"
