@@ -14,6 +14,7 @@ class NoteFragment : Fragment(), NoteMvp.View {
     private var readNoteStatus: Boolean = false
     private lateinit var addChangeText: EditText
     private lateinit var presenter : NoteMvp.Presenter
+    private var oldNoteText: String = ""
 
     companion object {
         private val NOTE_ID = "note_id"
@@ -55,6 +56,7 @@ class NoteFragment : Fragment(), NoteMvp.View {
     override fun setData(note: Note) {
         addChangeText.isEnabled = readNoteStatus
         addChangeText.setText(note.text)
+        oldNoteText = note.text
     }
 
     override fun onStart() {
@@ -80,7 +82,9 @@ class NoteFragment : Fragment(), NoteMvp.View {
     }
 
     override fun changeNote() {
-        presenter.saveNoteToDB(Note(System.currentTimeMillis(), idNote,
-                addChangeText.text.toString()), false)
+        if (oldNoteText != addChangeText.text.toString()) {
+            presenter.saveNoteToDB(Note(System.currentTimeMillis(), idNote,
+                    addChangeText.text.toString()), false)
+        }
     }
 }
